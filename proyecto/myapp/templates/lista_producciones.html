@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Producciones Diarias</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Producciones Diarias</h2>
+        <div class="mb-4 text-center">
+            <a href="{%url 'panel'%}" class="btn btn-primary">Volver</a>
+            <a href="?filtro=mis" class="btn btn-primary {% if filtro == 'mis' %}active{% endif %}">Mis Producciones</a>
+            <a href="?filtro=todas" class="btn btn-primary {% if filtro == 'todas' %}active{% endif %}">Todas las Producciones</a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Estación</th>
+                    <th>Fecha</th>
+                    <th>Gasolina (litros)</th>
+                    <th>Diésel (litros)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produccion in producciones %}
+                <tr>
+                    <td>{{ produccion.estacion }}</td>
+                    <td>{{ produccion.fecha }}</td>
+                    <td>{{ produccion.gasolina }}</td>
+                    <td>{{ produccion.diesel }}</td>
+                    <td>
+                        {% if produccion.operador == user %}
+                        <a href="{% url 'editar_produccion' produccion.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
