@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .decorators import group_required
 from .forms import ProduccionDiariaForm
 from .models import ProduccionDiaria
+from rest_framework import viewsets
+from .serializer import ProduccionDiariaSerializer
 
 
 @login_required
@@ -73,3 +75,7 @@ def editar_produccion_view(request, pk):
     else:
         form = ProduccionDiariaForm(instance=produccion)
     return render(request, 'editar_produccion.html', {'form': form})
+
+class ProduccionDiariaSet(viewsets.ModelViewSet):
+    queryset=ProduccionDiaria.objects.all()
+    serializer_class=ProduccionDiariaSerializer

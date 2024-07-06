@@ -15,8 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from myapp import views
+from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,7 @@ urlpatterns = [
     path('producciones/', views.lista_producciones_view, name='lista_producciones'),
     path('producciones/editar/<int:pk>/', views.editar_produccion_view, name='editar_produccion'),
     path('panel/', views.panel_operador_view, name='panel'),
-
-
+    path('api-auth/', include('rest_framework.urls')), #para navegar la API(mati)
+    path('myapp/',include('myapp.urls')),
+    path('docs/',include_docs_urls(title='API Documentation')),
     ]

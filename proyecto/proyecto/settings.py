@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+    'rest_framework',#para hacer la API REST(mati)
+    'coreapi',
+    
 ]
 
 MIDDLEWARE = [
@@ -135,3 +138,16 @@ def handler403(request, exception=None):
     return redirect('access_denied')  # Redirigir a una página de acceso denegado personalizada
 
 handler403 = 'myapp.views.handler403'
+
+REST_FRAMEWORK = {
+    #
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+}
