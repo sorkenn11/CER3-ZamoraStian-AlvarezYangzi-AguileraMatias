@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.login_view, name='login'),
     path('registro/', views.registro_view, name='registro'),
-    path('',views.inicio),
+    path('',views.inicio,name='inicio'),
     path('access_denied/', views.access_denied_view, name='access_denied'),  # Añade esta línea
     path('producciones/', views.lista_producciones_view, name='lista_producciones'),
     path('producciones/editar/<int:pk>/', views.editar_produccion_view, name='editar_produccion'),

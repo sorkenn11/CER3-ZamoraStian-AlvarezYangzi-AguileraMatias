@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,37 +7,50 @@
     <title>Registro de Producción Diaria</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
+        .jumbotron {
+            background-image: url('{% static "img/registro.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f8f9fa;
+            margin: 0;
+            color: black; /* Texto blanco */
         }
         .form-container {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        .alert {
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <a href="{%url 'panel'%}" class="btn btn-secondary">Volver</a>
-        <h2 class="mb-4 text-center">Registro de Producción Diaria</h2>
-        {% if is_operador %}
-        <div class="alert alert-success text-center">Eres un Operador</div>
-        {% else %}
-        <div class="alert alert-danger text-center">No eres un Operador</div>
-        {% endif %}
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-block">Registrar Producción</button>
-            </div>
-        </form>
+    <div class="jumbotron">
+        <div class="form-container">
+            <a href="{% url 'panel' %}" class="btn btn-secondary mb-4">Volver</a>
+            <h2 class="mb-4">Registro de Producción Diaria</h2>
+            {% if is_operador %}
+            <div class="alert alert-success">Eres un Operador</div>
+            {% else %}
+            <div class="alert alert-danger">No eres un Operador</div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-block">Registrar Producción</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

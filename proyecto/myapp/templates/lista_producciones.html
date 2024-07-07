@@ -1,45 +1,79 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Producciones Diarias</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .jumbotron {
+            background-image: url('{% static "img/diaria.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            color: #000000; /* Texto blanco */
+        }
+        .panel-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .table {
+            color: #000000; /* Asegura que el texto de la tabla sea negro */
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05); /* Ligeramente diferente para filas impares */
+        }
+        .btn-primary.active {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="mb-4 text-center">Producciones Diarias</h2>
-        <div class="mb-4 text-center">
-            <a href="{%url 'panel'%}" class="btn btn-primary">Volver</a>
-            <a href="?filtro=mis" class="btn btn-primary {% if filtro == 'mis' %}active{% endif %}">Mis Producciones</a>
-            <a href="?filtro=todas" class="btn btn-primary {% if filtro == 'todas' %}active{% endif %}">Todas las Producciones</a>
+    <div class="jumbotron">
+        <div class="panel-container">
+            <h2 class="mb-4 text-center">Producciones Diarias</h2>
+            <div class="mb-4 text-center">
+                <a href="{% url 'panel' %}" class="btn btn-primary">Volver</a>
+                <a href="?filtro=mis" class="btn btn-primary {% if filtro == 'mis' %}active{% endif %}">Mis Producciones</a>
+                <a href="?filtro=todas" class="btn btn-primary {% if filtro == 'todas' %}active{% endif %}">Todas las Producciones</a>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Estación</th>
+                        <th>Fecha</th>
+                        <th>Gasolina (litros)</th>
+                        <th>Diésel (litros)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produccion in producciones %}
+                    <tr>
+                        <td>{{ produccion.estacion }}</td>
+                        <td>{{ produccion.fecha }}</td>
+                        <td>{{ produccion.gasolina }}</td>
+                        <td>{{ produccion.diesel }}</td>
+                        <td>
+                            {% if produccion.operador == user %}
+                            <a href="{% url 'editar_produccion' produccion.pk %}" class="btn btn-sm btn-primary">Editar</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Estación</th>
-                    <th>Fecha</th>
-                    <th>Gasolina (litros)</th>
-                    <th>Diésel (litros)</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for produccion in producciones %}
-                <tr>
-                    <td>{{ produccion.estacion }}</td>
-                    <td>{{ produccion.fecha }}</td>
-                    <td>{{ produccion.gasolina }}</td>
-                    <td>{{ produccion.diesel }}</td>
-                    <td>
-                        {% if produccion.operador == user %}
-                        <a href="{% url 'editar_produccion' produccion.pk %}" class="btn btn-warning btn-sm">Editar</a>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

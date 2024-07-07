@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +12,11 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f8f9fa;
+            background-image: url('{% static "img/gasolina.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0;
         }
         .panel-container {
             background-color: white;
@@ -31,8 +36,9 @@
 <body>
     <div class="panel-container">
         <h2>Panel del Operador</h2>
-        <a href="{% url 'registro' %}" class="btn btn-primary btn-lg">Nueva Produccion</a>
+        <a href="{% url 'registro' %}" class="btn btn-primary btn-lg">Nueva Producción</a>
         <a href="{% url 'lista_producciones' %}?filtro=mis" class="btn btn-primary btn-lg">Ver Producciones Diarias</a>
+        <a href="{% url 'inicio' %}" class="btn btn-primary btn-lg">Pagina Principal</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
