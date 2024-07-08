@@ -11,6 +11,7 @@ from .serializer import ProduccionDiariaSerializer
 #filtro
 from .filters import ProduccionDiariaFilter
 from django_filters import rest_framework as filters
+from .models import Planta
 
 
 @login_required
@@ -28,7 +29,12 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('panel')  # Redirige a la página de registro después de iniciar sesión
+            if user.groups.filter(name='Fiscalizador').exists():
+                return redirect('fisca')  # Redirige a fisca si el usuario es Fiscalizador
+            elif user.groups.filter(name='Operador').exists():
+                return redirect('panel')  # Redirige a panel si el usuario es Operador
+            else:
+                return render(request, 'login.html', {'error': 'No tienes permisos para acceder a esta página.'})
         else:
             return render(request, 'login.html', {'error': 'Usuario o contraseña incorrectos'})
     return render(request, 'login.html')
@@ -85,3 +91,23 @@ class ProduccionDiariaViewSet(viewsets.ModelViewSet):
     serializer_class=ProduccionDiariaSerializer
     filter_backends=(filters.DjangoFilterBackend,)
     filterset_class = ProduccionDiariaFilter
+
+
+
+@login_required
+@group_required('Fiscalizador')
+def lista_producciones_fiscalizador(request):
+    estacion = request.GET.get('estacion', '')
+    if estacion:
+        producciones = ProduccionDiaria.objects.filter(estacion=estacion)
+    else:
+        producciones = ProduccionDiaria.objects.all()
+    
+    context = {
+        'producciones': producciones,
+        'estacion': estacion,
+    }
+    return render(request, 'fiscalizador.html', context)
+
+
+

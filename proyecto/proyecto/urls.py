@@ -30,4 +30,6 @@ urlpatterns = [
     path('panel/', views.panel_operador_view, name='panel'),
     path('api-auth/', include('rest_framework.urls')), #para navegar la API(mati)
     path('api/',include('myapp.urls')),
+    path('fiscalizador/',views.lista_producciones_fiscalizador,name='fisca'),
+    
     ]

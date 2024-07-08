@@ -20,11 +20,15 @@ class Planta(models.Model):
     nombrePlanta=models.CharField(max_length=100) 
     codigoPlanta=models.CharField(max_length=5) #PRG, PRD, PRA
     ubicacion=models.CharField(max_length=100) 
+    def __str__(self):
+        return f"{self.nombrePlanta} ({self.codigoPlanta}) - {self.ubicacion}"
 
 class Producto(models.Model):
     nombreProducto=models.CharField(max_length=100)
     codigoProducto=models.CharField(max_length=5) #G93, G95, G97, DIE, DIP, JA1, AVG 
     tipoProducto=models.CharField(max_length=100) #Gasolina, Diesel, Aviacion
+    def __str__(self):
+        return f"{self.nombreProducto} ({self.codigoProducto}) - {self.tipoProducto}"
 
 
 

@@ -17,7 +17,7 @@
             justify-content: center;
             align-items: center;
             margin: 0;
-            color: #000000; /* Texto blanco */
+            color: #000000; /* Texto negro */
         }
         .panel-container {
             background-color: rgba(255, 255, 255, 0.8);
@@ -43,10 +43,14 @@
         <div class="panel-container">
             <h2 class="mb-4 text-center">Producciones Diarias</h2>
             <div class="mb-4 text-center">
-                <a href="{% url 'panel' %}" class="btn btn-primary">Volver</a>
-                <a href="?filtro=mis" class="btn btn-primary {% if filtro == 'mis' %}active{% endif %}">Mis Producciones</a>
-                <a href="?filtro=todas" class="btn btn-primary {% if filtro == 'todas' %}active{% endif %}">Todas las Producciones</a>
+                <a href="{% url 'inicio' %}" class="btn btn-primary">Volver</a>
             </div>
+            <form method="GET" action="{% url 'fisca' %}" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="estacion" class="form-control" placeholder="Filtrar por estación" value="{{ estacion }}">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </form>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -63,7 +67,7 @@
                         <td>{{ produccion.estacion }}</td>
                         <td>{{ produccion.fecha }}</td>
                         <td>{{ produccion.hora }}</td>
-                        <td>{{produccion.litrosProduccion}}</td>
+                        <td>{{ produccion.litrosProduccion }}</td>
                         <td>{{ produccion.operador }}</td>
                         <td>
                             {% if produccion.operador == user %}
