@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'myapp',
     'rest_framework',#para hacer la API REST(mati)
     'coreapi',
+    'django_filters',#para filtrar la API
     
 ]
 

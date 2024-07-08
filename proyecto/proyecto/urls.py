@@ -29,6 +29,5 @@ urlpatterns = [
     path('producciones/editar/<int:pk>/', views.editar_produccion_view, name='editar_produccion'),
     path('panel/', views.panel_operador_view, name='panel'),
     path('api-auth/', include('rest_framework.urls')), #para navegar la API(mati)
-    path('myapp/',include('myapp.urls')),
-    path('docs/',include_docs_urls(title='API Documentation')),
+    path('api/',include('myapp.urls')),
     ]
